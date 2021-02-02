@@ -13,6 +13,10 @@ function App() {
 	const dispatch = useDispatch();
 	const getWeatherInfoAction = (city) => dispatch(fetchWeather(city));
 
+	useEffect(() => {
+		getWeatherInfoAction("Allen Park");
+	}, []);
+
 	const getWeatherInfo = (e) => {
 		e.preventDefault();
 		if (city === "") {
@@ -21,6 +25,27 @@ function App() {
 			getWeatherInfoAction(city);
 		}
 	};
+
+	let details = "";
+
+	if (weatherSelector.weatherinfo) {
+		details = (
+			<div className="details">
+				<h4>Weather Details</h4>
+				<p>
+					{weatherSelector.weatherinfo.location.name}
+					<span>
+						{weatherSelector.weatherinfo.location.country}
+					</span>
+				</p>
+
+				<p>{weatherSelector.weatherinfo.current.temp_f}</p>
+				<img src={state.weatherData.current.condition.icon} />
+			</div>
+		);
+	} else {
+		details = <p>You need to type a city</p>;
+	}
 
 	return (
 		<>
@@ -42,6 +67,7 @@ function App() {
 					</div>
 					<input type="submit" value="Check Weather" />
 				</form>
+				{details}
 			</main>
 		</>
 	);

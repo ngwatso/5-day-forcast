@@ -10,12 +10,15 @@ function App() {
 
 	const weatherSelector = useSelector((state) => state.WeatherInfo);
 
+	const dispatch = useDispatch();
+	const getWeatherInfoAction = (city) => dispatch(fetchWeather(city));
+
 	const getWeatherInfo = (e) => {
 		e.preventDefault();
 		if (city === "") {
-			console.log("no city to search for");
+			console.log("No city to search for");
 		} else {
-			console.log(city);
+			getWeatherInfoAction(city);
 		}
 	};
 
